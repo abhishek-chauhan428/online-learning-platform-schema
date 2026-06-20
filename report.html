@@ -1,0 +1,745 @@
+<link rel="stylesheet" href="style.css">
+
+<h1 id="online-learning-platform-database-design">Online Learning
+    Platform Database Design</h1>
+<hr />
+<h1 id="cover-page">Cover Page</h1>
+<p><strong>Case Study Title:</strong> Online Learning Platform</p>
+<p><strong>Group Number:</strong> B4</p>
+<h2 id="team-members">Team Members</h2>
+<h2 id="team-members-1">Team Members</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Roll Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Abhishek Chauhan</td>
+            <td>10165</td>
+        </tr>
+        <tr>
+            <td>Mahak Agarwal</td>
+            <td>10489</td>
+        </tr>
+        <tr>
+            <td>Shivam Kumar</td>
+            <td>10149</td>
+        </tr>
+        <tr>
+            <td>Shriniwas Vanjare</td>
+            <td>10240</td>
+        </tr>
+        <tr>
+            <td>Angel Singh Angel</td>
+            <td>10712</td>
+        </tr>
+        <tr>
+            <td>Daksh Kothari</td>
+            <td>10424</td>
+        </tr>
+        <tr>
+            <td>Arkajyoti Mondal</td>
+            <td>10160</td>
+        </tr>
+        <tr>
+            <td>Sai Venkat Gautam Jampala</td>
+            <td>10307</td>
+        </tr>
+        <tr>
+            <td>Harsh Srivastava</td>
+            <td>10182</td>
+        </tr>
+        <tr>
+            <td>Arsalan Rashid</td>
+            <td>10385</td>
+        </tr>
+    </tbody>
+</table>
+<h1 id="assumptions">1. Assumptions</h1>
+<p>The following assumptions and business rules were considered while
+    designing the database:</p>
+<ol type="1">
+    <li>
+        <p>A user can have one role at a time: Learner, Instructor, or
+            Admin.</p>
+    </li>
+    <li>
+        <p>Every learner and instructor must have a corresponding record in
+            the Users table.</p>
+    </li>
+    <li>
+        <p>Each course belongs to exactly one category, while a category can
+            contain multiple courses.</p>
+    </li>
+    <li>
+        <p>Each course is managed by one instructor, while an instructor can
+            teach multiple courses.</p>
+    </li>
+    <li>
+        <p>A course consists of one or more modules arranged in a predefined
+            sequence.</p>
+    </li>
+    <li>
+        <p>Each module may contain multiple content items such as videos,
+            documents, audio files, or learning resources.</p>
+    </li>
+    <li>
+        <p>A course may be offered in multiple batches.</p>
+    </li>
+    <li>
+        <p>Learners enroll in batches rather than directly in
+            courses.</p>
+    </li>
+    <li>
+        <p>Learner progress is tracked at the module level.</p>
+    </li>
+    <li>
+        <p>Assessments can be associated with a course or a specific
+            module.</p>
+    </li>
+    <li>
+        <p>Feedback and scores are provided by instructors after evaluating
+            submissions.</p>
+    </li>
+    <li>
+        <p>Certifications are awarded only after all mandatory certification
+            requirements are fulfilled.</p>
+    </li>
+    <li>
+        <p>A learner can receive a particular certification only
+            once.</p>
+    </li>
+    <li>
+        <p>A learning path contains multiple courses arranged in a
+            predefined order.</p>
+    </li>
+    <li>
+        <p>Promotional offers can be applied during payments, subject to
+            validity constraints.</p>
+    </li>
+    <li>
+        <p>Payments may be made for course purchases or subscription
+            plans.</p>
+    </li>
+    <li>
+        <p>The database is designed to support future scalability and
+            additional features.</p>
+    </li>
+</ol>
+<hr />
+<h1 id="er-diagram">2. ER Diagram</h1>
+<p>The following ER Diagram represents the conceptual and logical
+    structure of the Online Learning Platform database.</p>
+<figure>
+    <img src="erd.png" alt="ER Diagram" class="erd-diagram" />
+    <figcaption aria-hidden="true">ER Diagram</figcaption>
+</figure>
+<p>The ER Diagram includes:</p>
+<ul>
+    <li>Entities</li>
+    <li>Attributes</li>
+    <li>Primary Keys</li>
+    <li>Foreign Keys</li>
+    <li>Relationships</li>
+    <li>Cardinalities</li>
+</ul>
+<hr />
+<h1 id="relational-schema">3. Relational Schema</h1>
+<h2 id="users">Users</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>user_id</td>
+            <td>SERIAL</td>
+            <td>Primary Key</td>
+        </tr>
+        <tr>
+            <td>first_name</td>
+            <td>VARCHAR(100)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>last_name</td>
+            <td>VARCHAR(100)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td>VARCHAR(255)</td>
+            <td>UNIQUE, NOT NULL</td>
+        </tr>
+        <tr>
+            <td>password_hash</td>
+            <td>VARCHAR(255)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>phone_number</td>
+            <td>VARCHAR(15)</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>date_of_birth</td>
+            <td>DATE</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>country_code</td>
+            <td>CHAR(2)</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>user_type</td>
+            <td>ENUM</td>
+            <td>learner, instructor, admin</td>
+        </tr>
+        <tr>
+            <td>is_active</td>
+            <td>BOOLEAN</td>
+            <td>DEFAULT TRUE</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>DEFAULT CURRENT_TIMESTAMP</td>
+        </tr>
+        <tr>
+            <td>updated_at</td>
+            <td>TIMESTAMP</td>
+            <td>Auto Updated</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> user_id</p>
+<hr />
+<h2 id="learners">Learners</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>learner_id</td>
+            <td>INT</td>
+            <td>PK, FK → Users(user_id)</td>
+        </tr>
+        <tr>
+            <td>learning_goals</td>
+            <td>TEXT</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>education_level</td>
+            <td>VARCHAR(50)</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>industry_experience</td>
+            <td>INT</td>
+            <td>CHECK &gt;= 0</td>
+        </tr>
+        <tr>
+            <td>preferred_language</td>
+            <td>VARCHAR(50)</td>
+            <td>DEFAULT English</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> learner_id</p>
+<p><strong>Foreign Key:</strong> learner_id → Users(user_id)</p>
+<hr />
+<h2 id="instructors">Instructors</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>instructor_id</td>
+            <td>INT</td>
+            <td>PK, FK → Users(user_id)</td>
+        </tr>
+        <tr>
+            <td>qualification</td>
+            <td>VARCHAR(255)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>expertise_area</td>
+            <td>VARCHAR(100)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>years_experience</td>
+            <td>INT</td>
+            <td>CHECK &gt;= 0</td>
+        </tr>
+        <tr>
+            <td>bio</td>
+            <td>TEXT</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>resume_url</td>
+            <td>VARCHAR(512)</td>
+            <td>NULL</td>
+        </tr>
+        <tr>
+            <td>verification_status</td>
+            <td>ENUM</td>
+            <td>DEFAULT Pending</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> instructor_id</p>
+<p><strong>Foreign Key:</strong> instructor_id → Users(user_id)</p>
+<hr />
+<h2 id="categories">Categories</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>category_id</td>
+            <td>SERIAL</td>
+            <td>Primary Key</td>
+        </tr>
+        <tr>
+            <td>category_name</td>
+            <td>VARCHAR(100)</td>
+            <td>UNIQUE</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> category_id</p>
+<hr />
+<h2 id="courses">Courses</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>course_id</td>
+            <td>SERIAL</td>
+            <td>Primary Key</td>
+        </tr>
+        <tr>
+            <td>instructor_id</td>
+            <td>INT</td>
+            <td>FK → Instructors</td>
+        </tr>
+        <tr>
+            <td>category_id</td>
+            <td>INT</td>
+            <td>FK → Categories</td>
+        </tr>
+        <tr>
+            <td>course_name</td>
+            <td>VARCHAR(255)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>description</td>
+            <td>TEXT</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>difficulty_level</td>
+            <td>VARCHAR(20)</td>
+            <td>Beginner/Intermediate/Advanced</td>
+        </tr>
+        <tr>
+            <td>duration_hours</td>
+            <td>INT</td>
+            <td>CHECK &gt; 0</td>
+        </tr>
+        <tr>
+            <td>price</td>
+            <td>DECIMAL(10,2)</td>
+            <td>CHECK &gt;= 0</td>
+        </tr>
+        <tr>
+            <td>is_published</td>
+            <td>BOOLEAN</td>
+            <td>DEFAULT FALSE</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>DEFAULT CURRENT_TIMESTAMP</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> course_id</p>
+<p><strong>Foreign Keys:</strong> - instructor_id →
+    Instructors(instructor_id) - category_id → Categories(category_id)</p>
+<hr />
+<h2 id="batches">Batches</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>batch_id</td>
+            <td>SERIAL</td>
+            <td>Primary Key</td>
+        </tr>
+        <tr>
+            <td>course_id</td>
+            <td>INT</td>
+            <td>FK → Courses</td>
+        </tr>
+        <tr>
+            <td>batch_name</td>
+            <td>VARCHAR(100)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>start_date</td>
+            <td>DATE</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>end_date</td>
+            <td>DATE</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>max_enrollments</td>
+            <td>INT</td>
+            <td>CHECK &gt; 0</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>VARCHAR(20)</td>
+            <td>Upcoming/Ongoing/Completed</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>DEFAULT CURRENT_TIMESTAMP</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> batch_id</p>
+<p><strong>Foreign Key:</strong> course_id → Courses(course_id)</p>
+<hr />
+<h2 id="modules">Modules</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>module_id</td>
+            <td>SERIAL</td>
+            <td>Primary Key</td>
+        </tr>
+        <tr>
+            <td>course_id</td>
+            <td>INT</td>
+            <td>FK → Courses</td>
+        </tr>
+        <tr>
+            <td>module_title</td>
+            <td>VARCHAR(255)</td>
+            <td>NOT NULL</td>
+        </tr>
+        <tr>
+            <td>sequence</td>
+            <td>INT</td>
+            <td>CHECK &gt; 0</td>
+        </tr>
+        <tr>
+            <td>duration_hours</td>
+            <td>INT</td>
+            <td>CHECK &gt; 0</td>
+        </tr>
+        <tr>
+            <td>is_required</td>
+            <td>BOOLEAN</td>
+            <td>DEFAULT TRUE</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>DEFAULT CURRENT_TIMESTAMP</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> module_id</p>
+<p><strong>Foreign Key:</strong> course_id → Courses(course_id)</p>
+<hr />
+<h2 id="enrollments">Enrollments</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>enrollment_id</td>
+            <td>SERIAL</td>
+            <td>Primary Key</td>
+        </tr>
+        <tr>
+            <td>learner_id</td>
+            <td>INT</td>
+            <td>FK → Learners</td>
+        </tr>
+        <tr>
+            <td>batch_id</td>
+            <td>INT</td>
+            <td>FK → Batches</td>
+        </tr>
+        <tr>
+            <td>enrollment_date</td>
+            <td>TIMESTAMP</td>
+            <td>DEFAULT CURRENT_TIMESTAMP</td>
+        </tr>
+        <tr>
+            <td>completion_status</td>
+            <td>VARCHAR(20)</td>
+            <td>In Progress / Completed / Dropped</td>
+        </tr>
+        <tr>
+            <td>completion_date</td>
+            <td>TIMESTAMP</td>
+            <td>NULL</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> enrollment_id</p>
+<p><strong>Foreign Keys:</strong> - learner_id → Learners(learner_id) -
+    batch_id → Batches(batch_id)</p>
+<hr />
+<h2 id="learner-progress">Learner Progress</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>enrollment_id</td>
+            <td>INT</td>
+            <td>FK → Enrollments</td>
+        </tr>
+        <tr>
+            <td>module_id</td>
+            <td>INT</td>
+            <td>FK → Modules</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>VARCHAR(20)</td>
+            <td>Progress Status</td>
+        </tr>
+        <tr>
+            <td>completion_date</td>
+            <td>TIMESTAMP</td>
+            <td>NULL</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Primary Key:</strong> (enrollment_id, module_id)</p>
+<p><strong>Foreign Keys:</strong> - enrollment_id →
+    Enrollments(enrollment_id) - module_id → Modules(module_id)</p>
+<hr />
+<blockquote>
+    <p>Continue remaining tables (ContentItems, Assessments, Submissions,
+        Feedback, Subscriptions, Offers, Payments, Certification,
+        CertificationRequirement, CertificateIssued, LearningPaths,
+        LearningPathCourses) in the same format.</p>
+</blockquote>
+<hr />
+<h1 id="constraints">4. Constraints</h1>
+<h2 id="not-null-constraints">NOT NULL Constraints</h2>
+<p>Examples:</p>
+<ul>
+    <li>Users.first_name</li>
+    <li>Users.last_name</li>
+    <li>Users.email</li>
+    <li>Courses.course_name</li>
+    <li>Assessments.assessment_title</li>
+    <li>Certification.certificate_name</li>
+</ul>
+<h2 id="unique-constraints">UNIQUE Constraints</h2>
+<p>Examples:</p>
+<ul>
+    <li>Users.email</li>
+    <li>Categories.category_name</li>
+    <li>CertificateIssued.certificate_number</li>
+    <li>Offers.promo_code</li>
+</ul>
+<h2 id="check-constraints">CHECK Constraints</h2>
+<p>Examples:</p>
+<ul>
+    <li>industry_experience &gt;= 0</li>
+    <li>years_experience &gt;= 0</li>
+    <li>duration_hours &gt; 0</li>
+    <li>price &gt;= 0</li>
+    <li>max_enrollments &gt; 0</li>
+    <li>discount_percentage &lt;= 100</li>
+</ul>
+<h2 id="referential-integrity-constraints">Referential Integrity
+    Constraints</h2>
+<p>All foreign keys maintain referential integrity between related
+    tables.</p>
+<p>Examples:</p>
+<ul>
+    <li>Courses.category_id → Categories.category_id</li>
+    <li>Modules.course_id → Courses.course_id</li>
+    <li>Enrollments.learner_id → Learners.learner_id</li>
+    <li>Payments.subscription_id → Subscriptions.subscription_id</li>
+</ul>
+<hr />
+<h1 id="normalization">5. Normalization</h1>
+<p>The database schema has been normalized up to Third Normal Form
+    (3NF).</p>
+<h2 id="first-normal-form-1nf">First Normal Form (1NF)</h2>
+<ul>
+    <li>All attributes contain atomic values.</li>
+    <li>No repeating groups exist.</li>
+    <li>Every table has a primary key.</li>
+</ul>
+<h2 id="second-normal-form-2nf">Second Normal Form (2NF)</h2>
+<ul>
+    <li>The schema satisfies 1NF.</li>
+    <li>All non-key attributes depend entirely on the primary key.</li>
+    <li>No partial dependencies exist.</li>
+</ul>
+<h2 id="third-normal-form-3nf">Third Normal Form (3NF)</h2>
+<ul>
+    <li>The schema satisfies 2NF.</li>
+    <li>No transitive dependencies exist.</li>
+    <li>Separate entities such as Categories, Certifications, and Learning
+        Paths reduce redundancy.</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<p>The schema achieves Third Normal Form (3NF), ensuring minimal
+    redundancy and improved consistency.</p>
+<hr />
+<h1 id="indexing-strategy">6. Indexing Strategy</h1>
+<table>
+    <colgroup>
+        <col style="width: 48%" />
+        <col style="width: 51%" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Frequent Query</th>
+            <th>Suggested Index</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Courses with highest enrollment counts</td>
+            <td>Enrollments(batch_id)</td>
+        </tr>
+        <tr>
+            <td>Average assessment scores by course</td>
+            <td>Assessments(course_id)</td>
+        </tr>
+        <tr>
+            <td>Learners completing certification requirements</td>
+            <td>CertificateIssued(learner_id)</td>
+        </tr>
+        <tr>
+            <td>Pending submissions</td>
+            <td>Submissions(submission_status)</td>
+        </tr>
+        <tr>
+            <td>Revenue by category</td>
+            <td>Courses(category_id), Payments(course_id)</td>
+        </tr>
+        <tr>
+            <td>Learning path completion rates</td>
+            <td>LearningPathCourses(path_id)</td>
+        </tr>
+    </tbody>
+</table>
+<h3 id="justification">Justification</h3>
+<p>These indexes improve query performance by reducing lookup time and
+    supporting efficient joins on frequently accessed attributes.</p>
+<hr />
+<h1 id="design-justification">7. Design Justification</h1>
+<ol type="1">
+    <li>
+        <p>User information is centralized in the Users table to avoid
+            redundancy.</p>
+    </li>
+    <li>
+        <p>Learning paths and courses are connected through a bridge table
+            to resolve a many-to-many relationship.</p>
+    </li>
+    <li>
+        <p>Learner progress is tracked at the module level to provide
+            detailed course completion analytics.</p>
+    </li>
+    <li>
+        <p>Certification requirements are stored separately to support
+            flexible certification criteria.</p>
+    </li>
+    <li>
+        <p>The schema is normalized to 3NF, minimizing redundancy and
+            maintaining consistency.</p>
+    </li>
+    <li>
+        <p>Appropriate constraints and indexes ensure data integrity and
+            efficient query execution.</p>
+    </li>
+</ol>
+<hr />
+<h1 id="appendix">Appendix</h1>
+<h2 id="er-diagram-1">ER Diagram</h2>
+<p>(Insert ER Diagram Image)</p>
+<h2 id="additional-notes">Additional Notes</h2>
+<ul>
+    <li>Schema designed for scalability.</li>
+    <li>Supports future feature additions.</li>
+    <li>Follows relational database design best practices.</li>
+</ul>

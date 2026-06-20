@@ -1,0 +1,201 @@
+/* ===========================
+   GLOBAL STYLING
+   =========================== */
+
+body {
+    font-family: "Times New Roman", serif;
+    line-height: 1.6;
+    margin: 40px;
+    color: #222;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===========================
+   HEADINGS
+   =========================== */
+
+h1 {
+    font-size: 28px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 8px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+/* ===========================
+   COVER PAGE
+   =========================== */
+
+h1:first-of-type {
+    text-align: center;
+    border-bottom: none;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+#cover-page {
+    page-break-after: always;
+}
+
+/* ===========================
+   PARAGRAPHS
+   =========================== */
+
+p {
+    text-align: justify;
+    margin-bottom: 12px;
+}
+
+/* ===========================
+   TABLES
+   =========================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+th {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+th,
+td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* ===========================
+   LISTS
+   =========================== */
+
+ul,
+ol {
+    padding-left: 28px;
+}
+
+li {
+    margin-bottom: 6px;
+}
+
+/* ===========================
+   BLOCKQUOTES
+   =========================== */
+
+blockquote {
+    border-left: 4px solid #888;
+    padding-left: 15px;
+    color: #555;
+    font-style: italic;
+    margin: 20px 0;
+}
+
+/* ===========================
+   HORIZONTAL RULES
+   =========================== */
+
+hr {
+    margin: 40px 0;
+    border: none;
+    border-top: 1px solid #bbb;
+}
+
+/* ===========================
+   ER DIAGRAM
+   =========================== */
+
+figure {
+    text-align: center;
+    page-break-inside: avoid;
+}
+
+figure img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+figcaption {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+/* ===========================
+   PAGE BREAKS
+   =========================== */
+
+#er-diagram,
+#relational-schema,
+#constraints,
+#normalization,
+#indexing-strategy,
+#design-justification {
+    page-break-before: always;
+}
+
+/* ===========================
+   PDF PRINT SETTINGS
+   =========================== */
+
+@media print {
+
+    body {
+        margin: 25px;
+    }
+
+    h1,
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+
+    table {
+        page-break-inside: avoid;
+    }
+
+    figure {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.erd-diagram {
+    width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}
